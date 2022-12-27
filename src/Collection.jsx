@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 import MyCollections from "./Components/Collections/MyCollections";
 import MyLikes from "./Components/Collections/MyLikes";
 
-function Collection({ isToggled, handleToggle, width, logout }) {
+function Collection({ isToggled, handleToggle, width }) {
     
 
     //Remove the hard Coded Data for Collection and likes and consume an api to make it functional
@@ -59,11 +59,11 @@ function Collection({ isToggled, handleToggle, width, logout }) {
     return (  
         <>
             <div className={isToggled ? "h-screen bg-background font-serif" : "hidden"}>
-                <NavToggled isToggled={isToggled} handleToggle={handleToggle} logout={logout}/>
+                <NavToggled isToggled={isToggled} handleToggle={handleToggle}/>
             </div>
             <div className={isToggled ? 'hidden' : ''}>
                 <div className={isToggled ? "hidden" : "bg-background font-serif w-screen relative pt-[1.5rem] px-[1rem] overflow-x-hidden h-full min-h-screen scroll-smooth"}>
-                    {width < 1024 ? <NavMobile isToggled={isToggled} handleToggle={handleToggle}/> : <Navbar logout={logout}/>}
+                    {width < 1024 ? <NavMobile isToggled={isToggled} handleToggle={handleToggle}/> : <Navbar />}
                     <div className={width >= 1024 ? "absolute top-[115px] left-[10%] xl:left-[8%]" : 'mt-10'}>
                         <div className="text-white lg:flex items-center grid grid-cols-2 text-center">
                             {collectionHeaders}

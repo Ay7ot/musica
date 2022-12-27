@@ -10,20 +10,18 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
-    "axios": "^1.2.1",
     "dotenv": "^16.0.3",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-animation-on-scroll": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-iconly": "^2.2.5",
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.4.2",
     "react-slick": "^0.29.0",
-    "react-spotify-web-playback": "^0.10.0",
     "slick": "^1.12.2",
     "slick-carousel": "^1.8.1",
     "spotify-web-api-js": "^1.5.2",
-    "spotify-web-playback": "^1.4.0",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
