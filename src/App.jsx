@@ -122,6 +122,9 @@ function App() {
     setCurrentSong(currentSong)
   }
 
+  function changeCollection(id){
+    
+  }
   return (
     <>
     <audio src={songs.length > 1 ? currentSong.audio : ''} ref={audioElem} onEnded={songEnded} onTimeUpdate={onPlaying}/>

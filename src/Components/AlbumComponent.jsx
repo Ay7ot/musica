@@ -18,10 +18,11 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
 
     function addtoCollection(id){
         if(id===newPlaylist.id){
+
             setNewPlaylist(prevPlaylist=>{
                 return {
                     ...prevPlaylist,
-                    addedtoCollection: !prevPlaylist.addedtoCollection
+                    addedToCollection: !prevPlaylist.addedToCollection
                 }
             })
             setNewAlbum(prevAlbum=>{
@@ -29,15 +30,15 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                     if(id===item.id){
                         return {
                             ...item,
-                            addedtoCollection: !item.addedtoCollection
+                            addedToCollection: !item.addedToCollection
                         }
                     } else return {...item}
                 })
             })
 
-            if(!newPlaylist.addedtoCollection){
+            if(!newPlaylist.addedToCollection){
                 setMyCollections(prevCollections=>{
-                    return [...prevCollections, newPlaylist]
+                return [...prevCollections, {...newPlaylist, addedToCollection: !playlist.addedToCollection}]
                 })  
             } else{
                 setMyCollections(prevCollections=>{
@@ -49,7 +50,7 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
        }   
     }
 
-    // console.log(myCollections)
+    console.log(newAlbum)
 
     return (
         <div className='mt-9 lg:mt-0 lg:left-[10%] lg:-top-[400px] lg:w-[85vw] mb-[90px] lg:mb-0'>
@@ -66,9 +67,9 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                             <img src='playActive.png' className='mr-2'/>
                             <p className='text-white text-xs'>Play all</p>
                         </div>
-                        <div className={`flex items-center cursor-pointer ${newPlaylist.addedtoCollection ? 'bg-gray' : 'bg-[#424547]'} rounded-full px-[15px] py-[10px]`} onClick={()=>addtoCollection(newPlaylist.id)}>
+                        <div className={`flex items-center cursor-pointer ${newPlaylist.addedToCollection ? 'bg-gray' : 'bg-[#424547]'} rounded-full px-[15px] py-[10px]`} onClick={()=>addtoCollection(newPlaylist.id)}>
                             <img src='addCollection.png' className='mr-2'/>
-                            <p className='text-white text-xs'>{newPlaylist.addedtoCollection ? 'Added to Collection' : 'Add to Collection'}</p>
+                            <p className='text-white text-xs'>{newPlaylist.addedToCollection ? 'Added to Collection' : 'Add to Collection'}</p>
                         </div>
                         <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
                             <img src='unlikedAlbum.png' className='mr-2'/>
