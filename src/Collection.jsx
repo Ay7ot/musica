@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 import MyCollections from "./Components/Collections/MyCollections";
 import MyLikes from "./Components/Collections/MyLikes";
 
-function Collection({ isToggled, handleToggle, width }) {
+function Collection({ isToggled, handleToggle, width, myCollections, setMyCollections, myLikes, setMyLikes }) {
     
 
     //Remove the hard Coded Data for Collection and likes and consume an api to make it functional
@@ -71,9 +71,9 @@ function Collection({ isToggled, handleToggle, width }) {
                         <div className="lg:w-[85vw]">
                             {collections.map(item=>{
                                 if(item.isTrue === true && item.name === "My Collections"){
-                                    return <MyCollections key={'collections'}/>
+                                    return <MyCollections key={'collections'} myCollections={myCollections} setMyCollections={setMyCollections}/>
                                 }else if (item.isTrue === true && item.name === "Likes"){
-                                    return <MyLikes key={'Likes'}/>
+                                    return <MyLikes key={'Likes'} myLikes={myLikes} setMyLikes={setMyLikes}/>
                                 }else {
                                     return 
                                 }

@@ -6,7 +6,7 @@ import PlayerControl from "./playerControl";
 import AlbumComponent from "./Components/AlbumComponent";
 import { useLocation } from 'react-router-dom';
 
-function ViewAlbum({ isToggled, handleToggle, width, setCurrentSong, setSongs, isPlaying, setisPlaying }) {
+function ViewAlbum({ isToggled, handleToggle, width, setCurrentSong, setSongs, isPlaying, setisPlaying, myCollections, setMyCollections, myLikes, setMyLikes, newAlbum, setNewAlbum }) {
 
     const location = useLocation()
     
@@ -20,7 +20,7 @@ function ViewAlbum({ isToggled, handleToggle, width, setCurrentSong, setSongs, i
                 {width < 1024 ? <NavMobile isToggled={isToggled} handleToggle={handleToggle}/> : <Navbar />}
                 <div className={width >= 1024 ? "absolute top-[115px] left-[10%] xl:left-[8%] lg:pb-[120px]" : 'mt-10'}>
                     <div className="lg:w-[85vw]">
-                        <AlbumComponent playlist={location.state} width={width} setCurrentSong={setCurrentSong} setSongs={setSongs} isPlaying={isPlaying} setisPlaying={setisPlaying}/>
+                        <AlbumComponent playlist={location.state} width={width} setCurrentSong={setCurrentSong} setSongs={setSongs} isPlaying={isPlaying} setisPlaying={setisPlaying} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
                     </div>
                 </div>
             </div>

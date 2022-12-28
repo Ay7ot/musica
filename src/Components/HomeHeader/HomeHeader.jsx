@@ -4,14 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
-function HomeHeader({ width }) {    
-    const [newAlbum, setNewAlbum] = useState([]);
-
-    useEffect(()=>{
-        fetch('https://musica-api.onrender.com/playlist')
-            .then((res)=>res.json())
-            .then((data)=>setNewAlbum(data.map(playlist=>{return {...playlist, isFavorite: false, playListLength: '2:10:00', heart1: 'Heart2.png', heart2: 'HeartFull.png'}})))
-    },[])
+function HomeHeader({ width, newAlbum, setNewAlbum }) {    
 
     const settingsVertical = {
         dots: true,

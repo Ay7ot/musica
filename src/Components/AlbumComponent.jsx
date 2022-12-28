@@ -1,27 +1,64 @@
 import React from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, setisPlaying }) => {
+const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, setisPlaying, myCollections, setMyCollections, myLikes, setMyLikes, newAlbum, setNewAlbum }) => {
+
+    const [newPlaylist, setNewPlaylist] = useState(playlist)
 
     function playSong(id){
-        setSongs(playlist.files)
+        setSongs(newPlaylist.files)
         setisPlaying(true)
-        setCurrentSong(playlist.files.find(item=>{
+        setCurrentSong(newPlaylist.files.find(item=>{
             if(id === item.id){
                 return item.audio
             }
         }))
     }
 
+    function addtoCollection(id){
+        if(id===newPlaylist.id){
+            setNewPlaylist(prevPlaylist=>{
+                return {
+                    ...prevPlaylist,
+                    addedtoCollection: !prevPlaylist.addedtoCollection
+                }
+            })
+            setNewAlbum(prevAlbum=>{
+                return prevAlbum.map(item=>{
+                    if(id===item.id){
+                        return {
+                            ...item,
+                            addedtoCollection: !item.addedtoCollection
+                        }
+                    } else return {...item}
+                })
+            })
+
+            if(!newPlaylist.addedtoCollection){
+                setMyCollections(prevCollections=>{
+                    return [...prevCollections, newPlaylist]
+                })  
+            } else{
+                setMyCollections(prevCollections=>{
+                    const index = prevCollections.indexOf(newPlaylist)
+                    const newArray = prevCollections.splice(index, 1)
+                    return newArray
+                })
+            }
+       }   
+    }
+
+    // console.log(myCollections)
+
     return (
         <div className='mt-9 lg:mt-0 lg:left-[10%] lg:-top-[400px] lg:w-[85vw] mb-[90px] lg:mb-0'>
               <div className='lg:flex'>
-                <img src={playlist.cover} className='rounded-xl h-[350px] w-full lg:max-w-[350px]'/>
+                <img src={newPlaylist.cover} className='rounded-xl h-[350px] w-full lg:max-w-[350px]'/>
                 <div className='lg:ml-7 lg:mt-[80px]'>
                     <div className='lg:w-[500px]'>
-                        <h2 className='text-[#A4C7C6] text-[32px] font-bold mt-6'>{playlist.title}</h2>
-                        <p className='text-gray-dark text-sm'>{playlist.info}</p>
+                        <h2 className='text-[#A4C7C6] text-[32px] font-bold mt-6'>{newPlaylist.title}</h2>
+                        <p className='text-gray-dark text-sm'>{newPlaylist.info}</p>
                         <p className='text-gray-dark text-sm mt-3'>64 Songs - 16 Hours</p>
                     </div>
                     <div className='flex justify-between mt-6 md:w-[500px] lg:w-[400px]'>
@@ -29,9 +66,9 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                             <img src='playActive.png' className='mr-2'/>
                             <p className='text-white text-xs'>Play all</p>
                         </div>
-                        <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
+                        <div className={`flex items-center cursor-pointer ${newPlaylist.addedtoCollection ? 'bg-gray' : 'bg-[#424547]'} rounded-full px-[15px] py-[10px]`} onClick={()=>addtoCollection(newPlaylist.id)}>
                             <img src='addCollection.png' className='mr-2'/>
-                            <p className='text-white text-xs'>Add to Collection</p>
+                            <p className='text-white text-xs'>{newPlaylist.addedtoCollection ? 'Added to Collection' : 'Add to Collection'}</p>
                         </div>
                         <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
                             <img src='unlikedAlbum.png' className='mr-2'/>
@@ -43,7 +80,7 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
               {
                 width >= 1024 ?
                 <div className='mt-12'>
-                    {playlist.files.map(item=>{
+                    {newPlaylist.files.map(item=>{
                         return (
                             <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id} onClick={()=>playSong(item.id)}>
                                 <div className='flex items-center'>
@@ -63,7 +100,7 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                     })}
                 </div> : 
                 <div className='mt-6'>
-                    {playlist.files.map(item=>{
+                    {newPlaylist.files.map(item=>{
                         return (
                             <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id} onClick={()=>playSong(item.id)}>
                                 <div className='flex items-center'>

@@ -16,16 +16,26 @@ function App() {
   const [isToggled, setIsToggled] = useState(false);
       
   const [songs, setSongs] = useState([{audio: ''}])
+  const [newAlbum, setNewAlbum] = useState([])
   const [unChangedSongs, setUnChangedSongs] = useState()
   const [isPlaying, setisPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState('')
   const [isShuffled, setIsShuffled] = useState(false)
   const [isRepeat, setIsRepeat] = useState(false)
+  const [myCollections, setMyCollections] = useState([])
+  const [myLikes, setMyLikes] = useState([])
 
   useEffect(()=>{
       fetch('https://musica-api.onrender.com/popular')
           .then((res)=>res.json())
           .then((data)=>setSongs(data))
+  },[])
+
+  
+  useEffect(()=>{
+    fetch('https://musica-api.onrender.com/playlist')
+        .then((res)=>res.json())
+        .then((data)=>setNewAlbum(data.map(playlist=>{return {...playlist, isFavorite: false, playListLength: '2:10:00', heart1: 'Heart2.png', heart2: 'HeartFull.png', addedToCollection: false}})))
   },[])
 
   useEffect(()=>{
@@ -60,7 +70,7 @@ function App() {
     if(!isRepeat){
       nextTrack()
     }else{
-      audioElem.current.currentTime= 0
+      audioElem.current.currentTime = 0
       setCurrentSong(currentSong)
     }
   } 
@@ -99,13 +109,10 @@ function App() {
       const shuffledSongs = otherSongs.sort(() => Math.random() - 0.5)
       setSongs([currentSong, ...shuffledSongs])  
     }else{
-      const otherSongs = unChangedSongs.filter(song => song.id !== currentSong.id)
       const nowPlaying = unChangedSongs.find(song => song.id === currentSong.id)
       const index = unChangedSongs.indexOf(nowPlaying)
       const newSlicedArray1 = unChangedSongs.slice(index)
-      // console.log(newSlicedArray1)
       const newSlicedArray2 = unChangedSongs.filter(item=>!newSlicedArray1.includes(item))
-      // console.log(newSlicedArray1, newSlicedArray2)
       setSongs([...newSlicedArray1, ...newSlicedArray2])
     }
   }
@@ -122,21 +129,21 @@ function App() {
       <Route path='/' 
         element={
         <>
-          <Home width={width} isToggled={isToggled} handleToggle={handleToggle}/>
+          <Home width={width} isToggled={isToggled} handleToggle={handleToggle} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
           <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/collection' element={
         <>
-          <Collection width={width} height={height} isToggled={isToggled} handleToggle={handleToggle}/>
+          <Collection width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes}/>
           <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/viewalbum' element={
         <>
-          <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying}/>
+          <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
           <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
