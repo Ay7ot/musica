@@ -89,10 +89,17 @@ function App() {
       setSongs([currentSong, ...shuffledSongs])  
     }else{
       const otherSongs = unChangedSongs.filter(song => song.id !== currentSong.id)
-      setSongs([currentSong, ...otherSongs])
+      const nowPlaying = unChangedSongs.find(song => song.id === currentSong.id)
+      const index = unChangedSongs.indexOf(nowPlaying)
+      const newSlicedArray1 = unChangedSongs.slice(index)
+      // console.log(newSlicedArray1)
+      const newSlicedArray2 = unChangedSongs.filter(item=>!newSlicedArray1.includes(item))
+      // console.log(newSlicedArray1, newSlicedArray2)
+      setSongs([...newSlicedArray1, ...newSlicedArray2])
     }
   }
 
+  // console.log(unChangedSongs)
   console.log(songs)
 
   function repeatOne(){
