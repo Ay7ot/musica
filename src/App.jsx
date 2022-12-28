@@ -57,25 +57,36 @@ function App() {
   }
 
   function songEnded(){
-    nextTrack()
+    if(!isRepeat){
+      nextTrack()
+    }else{
+      audioElem.current.currentTime= 0
+      setCurrentSong(currentSong)
+    }
   } 
 
   function nextTrack(){
     const index = songs.findIndex(x=>x.title === currentSong.title)
-    if (index===songs.length-1){
+    if (index===songs.length-1 && !isRepeat){
         setCurrentSong(songs[0])
-    }else{
+    }else if(!isRepeat){
         setCurrentSong(songs[index+1])
+    }else if(isRepeat){
+      audioElem.current.currentTime= 0
+      setCurrentSong(currentSong)
     }
     setisPlaying(true)
   }
   
   function prevTrack(){
     const index = songs.findIndex(x=>x.title === currentSong.title)
-    if (index===0){
-        setCurrentSong(songs[songs.length-1])
-    }else{
-        setCurrentSong(songs[index-1])
+    if(index===0 && !isRepeat){
+      setCurrentSong(songs[songs.length-1])
+    }else if(index !== 0 && !isRepeat){
+      setCurrentSong(songs[index-1])
+    }else if(isRepeat){
+      audioElem.current.currentTime= 0
+      setCurrentSong(currentSong)
     }
     setisPlaying(true)
   }
@@ -99,11 +110,9 @@ function App() {
     }
   }
 
-  // console.log(unChangedSongs)
-  console.log(songs)
-
   function repeatOne(){
-    
+    setIsRepeat(!isRepeat)
+    setCurrentSong(currentSong)
   }
 
   return (
@@ -114,25 +123,25 @@ function App() {
         element={
         <>
           <Home width={width} isToggled={isToggled} handleToggle={handleToggle}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle}/>
+          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/collection' element={
         <>
           <Collection width={width} height={height} isToggled={isToggled} handleToggle={handleToggle}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause}/>
+          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/viewalbum' element={
         <>
           <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause}/>
+          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
-      <Route path = '/playerMobile' element= {<PlayerMobilePage height={height} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled}/> }/>
+      <Route path = '/playerMobile' element= {<PlayerMobilePage height={height} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/> }/>
     </Routes>
     </>
   )

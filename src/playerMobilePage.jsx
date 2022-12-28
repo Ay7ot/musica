@@ -2,9 +2,9 @@ import React from 'react'
 import PlayerLength from './Components/PlayerLength'
 import VolumeSlider from './Components/Volume'
 import { FaPause, FaPlay, FaForward, FaBackward, FaHeart, FaRandom } from 'react-icons/fa'
-import { MdRepeat, MdShuffle } from 'react-icons/md'
+import { MdRepeat, MdShuffle, MdRepeatOne } from 'react-icons/md'
 
-export default function PlayerMobilePage({ songs, height, setisPlaying, nextTrack, prevTrack, isPlaying, currentSong, shuffle, isShuffled, setCurrentSong, audioElem, onPlaying, playPause }) {
+export default function PlayerMobilePage({ songs, height, setisPlaying, nextTrack, prevTrack, isPlaying, currentSong, shuffle, isShuffled, isRepeat, repeatOne, setCurrentSong, audioElem, onPlaying, playPause }) {
  
   return (
     <div className='bg-background min-h-screen py-10 px-8'>
@@ -24,7 +24,7 @@ export default function PlayerMobilePage({ songs, height, setisPlaying, nextTrac
           <i className='text-white text-[2rem]' onClick={prevTrack}><FaBackward /></i>
           <i className='text-white text-[2rem]' onClick={playPause}>{isPlaying ? <FaPause /> : <FaPlay />}</i>
           <i className='text-white text-[2rem]' onClick={nextTrack}><FaForward /></i>
-          <i className='text-white text-[1.5rem]'><MdRepeat /></i>
+          <i className={`${isRepeat ? 'text-yellow' : 'text-white'} text-[1.5rem]`} onClick={repeatOne}>{isRepeat ? <MdRepeatOne /> : <MdRepeat />}</i>
         </div>
         <div className='flex items-center'>
             <img src='volume-high.png' className='mr-5'/>

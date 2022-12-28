@@ -3,8 +3,9 @@ import PlayerLength from "./Components/PlayerLength";
 import {FaPause, FaPlay, FaForward, FaBackward} from 'react-icons/fa'
 import { useEffect, useRef } from "react";
 import { Link} from "react-router-dom";
+import { MdRepeat, MdShuffle, MdRepeatOne } from 'react-icons/md'
 
-function PlayerControl({ width, audioElem, songs, nextTrack, prevTrack, setisPlaying, isPlaying, currentSong, setCurrentSong, onPlaying, playPause }) {
+function PlayerControl({ width, audioElem, songs, nextTrack, prevTrack, setisPlaying, isPlaying, currentSong, setCurrentSong, onPlaying, playPause, shuffle, isShuffled, isRepeat, repeatOne, }) {
    
     return (  
         <div className="fixed bottom-0 w-[100vw] backdrop-blur-md h-20 md:h-[7rem] lg:h-24">
@@ -23,13 +24,13 @@ function PlayerControl({ width, audioElem, songs, nextTrack, prevTrack, setisPla
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="flex items-center w-[50%] justify-between mb-4">
-                        <img src="shuffle.png"/>
+                    <i className={`${isShuffled ? 'text-yellow' : 'text-white'} text-[1.5rem]`} onClick={shuffle}><MdShuffle /></i>
                         <i className="text-white text-2xl" onClick={prevTrack}><FaBackward/></i>
                         <div onClick={playPause} className='text-gray-dark p-2 bg-yellow rounded-full mr-3 lg:mr-0 mb-'>
                             {isPlaying ? <FaPause /> : <FaPlay />}
                         </div>
                         <i className="text-white text-2xl" onClick={nextTrack}><FaForward /></i>
-                        <img src="repeate-one.png"/>
+                        <i className={`${isRepeat ? 'text-yellow' : 'text-white'} text-[1.5rem]`} onClick={repeatOne}>{isRepeat ? <MdRepeatOne /> : <MdRepeat />}</i>
                     </div>
                     <PlayerLength currentSong={currentSong} isPlaying={isPlaying} onPlaying={onPlaying} audioElem={audioElem}/>
                 </div>
