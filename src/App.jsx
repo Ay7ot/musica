@@ -16,11 +16,14 @@ function App() {
   const [isToggled, setIsToggled] = useState(false);
       
   const [songs, setSongs] = useState([{audio: ''}])
+  const [unChangedSongs, setUnChangedSongs] = useState()
   const [isPlaying, setisPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState('')
+  const [isShuffled, setIsShuffled] = useState(false)
+  const [isRepeat, setIsRepeat] = useState(false)
 
   useEffect(()=>{
-      fetch('https://musica-api.onrender.com/new')
+      fetch('https://musica-api.onrender.com/popular')
           .then((res)=>res.json())
           .then((data)=>setSongs(data))
   },[])
@@ -75,7 +78,26 @@ function App() {
         setCurrentSong(songs[index-1])
     }
     setisPlaying(true)
-}
+  }
+
+  function shuffle(){ 
+    setIsShuffled(!isShuffled) 
+    setUnChangedSongs(songs)
+    if(!isShuffled){
+      const otherSongs = songs.filter(song => song.id !== currentSong.id)
+      const shuffledSongs = otherSongs.sort(() => Math.random() - 0.5)
+      setSongs([currentSong, ...shuffledSongs])  
+    }else{
+      const otherSongs = unChangedSongs.filter(song => song.id !== currentSong.id)
+      setSongs([currentSong, ...otherSongs])
+    }
+  }
+
+  console.log(songs)
+
+  function repeatOne(){
+    
+  }
 
   return (
     <>
@@ -85,7 +107,7 @@ function App() {
         element={
         <>
           <Home width={width} isToggled={isToggled} handleToggle={handleToggle}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause}/>
+          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle}/>
         </>
         }
       />
@@ -103,8 +125,8 @@ function App() {
         </>
         }
       />
-      <Route path='/playerMobile' element={<PlayerMobilePage height={height} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause}/>}/>
-    </Routes>   
+      <Route path = '/playerMobile' element= {<PlayerMobilePage height={height} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled}/> }/>
+    </Routes>
     </>
   )
 }
