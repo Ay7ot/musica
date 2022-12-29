@@ -38,7 +38,7 @@ const AlbumComponent = ({ playlist, width, songs, setSongs, setCurrentSong, isPl
 
             if(!newPlaylist.addedToCollection){
                 setMyCollections(prevCollections=>{
-                return [...prevCollections, {...newPlaylist, addedToCollection: !playlist.addedToCollection}]
+                return [...prevCollections, {...newPlaylist, addedToCollection: true}]
                 })  
             } else{
                 setMyCollections(prevCollections=>{
