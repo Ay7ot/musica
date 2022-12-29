@@ -14,8 +14,8 @@
 }
 
 .slider-thumb::-webkit-slider-thumb{
-    -webkit-appearance: none;
     background-color: #FACD66;
+    color: #FACD66;
     height: 0.25rem;
     width: 0.25rem;
     border-radius: 1rem;
