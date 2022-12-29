@@ -28,14 +28,14 @@ function App() {
   useEffect(()=>{
       fetch('https://musica-api.onrender.com/popular')
           .then((res)=>res.json())
-          .then((data)=>setSongs(data))
+          .then((data)=>setSongs(data.map(data=>({...data, isLiked: false}))))
   },[])
 
   
   useEffect(()=>{
     fetch('https://musica-api.onrender.com/playlist')
         .then((res)=>res.json())
-        .then((data)=>setNewAlbum(data.map(playlist=>{return {...playlist, isFavorite: false, playListLength: '2:10:00', heart1: 'Heart2.png', heart2: 'HeartFull.png', addedToCollection: false}})))
+        .then((data)=>setNewAlbum(data.map(playlist=>{return {...playlist, isFavorite: false, playListLength: '2:10:00', heart1: 'Heart2.png', heart2: 'HeartFull.png', addedToCollection: false, files: playlist.files.map(item=>({...item, isLiked: false}))}})))
   },[])
 
   useEffect(()=>{
@@ -123,8 +123,9 @@ function App() {
   }
 
   function changeCollection(id){
-    
+
   }
+
   return (
     <>
     <audio src={songs.length > 1 ? currentSong.audio : ''} ref={audioElem} onEnded={songEnded} onTimeUpdate={onPlaying}/>
@@ -146,12 +147,12 @@ function App() {
       />
       <Route path='/viewalbum' element={
         <>
-          <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
+          <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} songs={songs} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
           <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
-      <Route path = '/playerMobile' element= {<PlayerMobilePage height={height} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/> }/>
+      <Route path = '/playerMobile' element= {<PlayerMobilePage height={height} songs={songs} myLikes={myLikes} setMyLikes={setMyLikes} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/> }/>
     </Routes>
     </>
   )

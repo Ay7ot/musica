@@ -1,8 +1,8 @@
 import React from 'react';
-import { FaEllipsisV } from 'react-icons/fa';
+import { FaEllipsisV, FaHeart } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 
-const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, setisPlaying, myCollections, setMyCollections, myLikes, setMyLikes, newAlbum, setNewAlbum }) => {
+const AlbumComponent = ({ playlist, width, songs, setSongs, setCurrentSong, isPlaying, setisPlaying, myCollections, setMyCollections, myLikes, setMyLikes, newAlbum, setNewAlbum }) => {
 
     const [newPlaylist, setNewPlaylist] = useState(playlist)
 
@@ -50,7 +50,47 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
        }   
     }
 
-    console.log(newAlbum)
+    function likeSong(id, name){
+
+        setNewPlaylist(prevPlaylist=>{
+            return {
+                ...prevPlaylist,
+                files: prevPlaylist.files.map(item=>{
+                    if(item.id === id){
+                    return {
+                        ...item,
+                        isLiked: !item.isLiked
+                    }
+                    }else return {...item}
+                })
+            }
+        })
+       setNewAlbum(prevAlbum=>prevAlbum.map(item=>{
+            if(item.id !== newPlaylist.id){
+                return {...item}
+            }else{
+                return {
+                    ...item,
+                    files: item.files.map(song=>{
+                        if(song.id === id){
+                            return {...song, isLiked: !song.isLiked}
+                        }else return {...item}
+                    })
+                }
+            }
+       }))
+       const clickedSong = newPlaylist.files.find(item=>item.title === name)
+       console.log(clickedSong)
+       if(!clickedSong.isLiked){
+            setMyLikes(likes=> [...likes, {...clickedSong, isLiked: !clickedSong.isLiked}])
+       }else {
+            setMyLikes(likes=>{
+                const index = likes.indexOf(likes.title === name)
+                const newArray = likes.splice(index, 1)
+                return newArray
+            })
+       }
+    }
 
     return (
         <div className='mt-9 lg:mt-0 lg:left-[10%] lg:-top-[400px] lg:w-[85vw] mb-[90px] lg:mb-0'>
@@ -60,7 +100,7 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                     <div className='lg:w-[500px]'>
                         <h2 className='text-[#A4C7C6] text-[32px] font-bold mt-6'>{newPlaylist.title}</h2>
                         <p className='text-gray-dark text-sm'>{newPlaylist.info}</p>
-                        <p className='text-gray-dark text-sm mt-3'>64 Songs - 16 Hours</p>
+                        <p className='text-gray-dark text-sm mt-3'>{playlist.files.length} Songs - 16 Hours</p>
                     </div>
                     <div className='flex justify-between mt-6 md:w-[500px] lg:w-[400px]'>
                         <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
@@ -83,12 +123,12 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                 <div className='mt-12'>
                     {newPlaylist.files.map(item=>{
                         return (
-                            <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id} onClick={()=>playSong(item.id)}>
+                            <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id}>
                                 <div className='flex items-center'>
                                     <img src={item.cover} className='w-[40px] rounded-lg'/>
-                                    <img src='trackHeart.png' className='hidden lg:block ml-5'/>
+                                    <i onClick={()=>likeSong(item.id, item.title)} className={`hidden lg:block ml-5 ${item.isLiked ? 'text-yellow' : 'text-gray-dark'}`}><FaHeart /></i>
                                 </div>
-                                <div className='w-[300px] 2xl:w-[500px] flex justify-between'>
+                                <div className='w-[300px] 2xl:w-[500px] flex justify-between' onClick={()=>playSong(item.id)}>
                                     <p className='text-sm text-white font-thin tracking-wide mb-0'>{item.title}</p>
                                     <p className='text-xs lg:text-sm text-white font-thin tracking-wider'>Single</p>
                                 </div>
@@ -103,12 +143,12 @@ const AlbumComponent = ({ playlist, width, setSongs, setCurrentSong, isPlaying, 
                 <div className='mt-6'>
                     {newPlaylist.files.map(item=>{
                         return (
-                            <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id} onClick={()=>playSong(item.id)}>
+                            <div className='flex items-center justify-between bg-[#2c2f31] p-2 rounded-xl mb-4' key={item.id}>
                                 <div className='flex items-center'>
                                     <div className='flex items-center'>
                                         <img src={item.cover} className='w-[40px] rounded-lg'/>
                                     </div>
-                                    <div className='ml-3 flex flex-col'>
+                                    <div className='ml-3 flex flex-col'  onClick={()=>playSong(item.id)}>
                                         <p className='text-sm text-white font-thin tracking-wide mb-[6px]'>{item.title}</p>
                                         <p className='text-xs text-white font-thin tracking-wider'>Single</p>
                                     </div>
