@@ -103,15 +103,15 @@ const AlbumComponent = ({ playlist, width, songs, setSongs, setCurrentSong, isPl
                         <p className='text-gray-dark text-sm mt-3'>{playlist.files.length} Songs - 16 Hours</p>
                     </div>
                     <div className='flex justify-between mt-6 md:w-[500px] lg:w-[400px]'>
-                        <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
+                        <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[10px] py-[10px]'>
                             <img src='playActive.png' className='mr-2'/>
                             <p className='text-white text-xs'>Play all</p>
                         </div>
-                        <div className={`flex items-center cursor-pointer ${newPlaylist.addedToCollection ? 'bg-gray' : 'bg-[#424547]'} rounded-full px-[15px] py-[10px]`} onClick={()=>addtoCollection(newPlaylist.id)}>
+                        <div className={`flex items-center cursor-pointer ${newPlaylist.addedToCollection ? 'bg-gray' : 'bg-[#424547]'} rounded-full px-[10px] py-[10px]`} onClick={()=>addtoCollection(newPlaylist.id)}>
                             <img src='addCollection.png' className='mr-2'/>
                             <p className='text-white text-xs'>{newPlaylist.addedToCollection ? 'Added to Collection' : 'Add to Collection'}</p>
                         </div>
-                        <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[15px] py-[10px]'>
+                        <div className='flex items-center cursor-pointer bg-[#424547] rounded-full px-[10px] py-[10px]'>
                             <img src='unlikedAlbum.png' className='mr-2'/>
                             <p className='text-white text-xs'>Like</p>
                         </div>
