@@ -36,7 +36,7 @@ function PlayerControl({ width, audioElem, songs, nextTrack, prevTrack, setisPla
                 </div>
                 <div className="flex items-center">
                     <img src="volume-high.png" className="mr-4"/>
-                    <VolumeSlider />
+                    <VolumeSlider audioElem={audioElem}/>
                 </div>
             </div> :
             <div className="flex justify-between mt-2 w-full">

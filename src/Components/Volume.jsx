@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function VolumeSlider() {
+function VolumeSlider({audioElem}) {
 
     const [value, setValue] = useState(0.5)
 
@@ -16,7 +16,10 @@ function VolumeSlider() {
             step="0.01"
             className="appearance-none bg-gray rounded-lg bg bg-gradient-to-r from-yellow to-yellow h-1 cursor-pointer slider-thumb bg-no-repeat w-full"
             value={value}
-            onChange={(e)=>setValue(e.target.valueAsNumber)}
+            onChange={(e)=>{
+                setValue(e.target.valueAsNumber)
+                audioElem.current.volume = e.target.value
+            }}
             style={getBackgroundSize()}
         />
     );

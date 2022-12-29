@@ -44,7 +44,7 @@ export default function PlayerMobilePage({ songs, height, setisPlaying, nextTrac
         </div>
         <div className='flex items-center'>
             <img src='volume-high.png' className='mr-5'/>
-            <VolumeSlider />
+            <VolumeSlider audioElem={audioElem}/>
         </div>
     </div>
   )
