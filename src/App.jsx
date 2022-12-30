@@ -134,21 +134,21 @@ function App() {
         element={
         <>
           <Home width={width} isToggled={isToggled} handleToggle={handleToggle} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
+          <PlayerControl width={width} isToggled={isToggled} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/collection' element={
         <>
           <Collection width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
+          <PlayerControl width={width} isToggled={isToggled} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />
       <Route path='/viewalbum' element={
         <>
           <ViewAlbum width={width} height={height} isToggled={isToggled} handleToggle={handleToggle} setCurrentSong={setCurrentSong} songs={songs} setSongs={setSongs} setisPlaying={setisPlaying} isPlaying={isPlaying} myCollections={myCollections} setMyCollections={setMyCollections} myLikes={myLikes} setMyLikes={setMyLikes} newAlbum={newAlbum} setNewAlbum={setNewAlbum}/>
-          <PlayerControl width={width} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
+          <PlayerControl width={width} isToggled={isToggled} songs={songs} setisPlaying={setisPlaying} isPlaying={isPlaying} currentSong={currentSong} setCurrentSong={setCurrentSong} audioElem={audioElem} onPlaying={onPlaying} nextTrack={nextTrack} prevTrack={prevTrack} playPause={playPause} shuffle={shuffle} isShuffled={isShuffled} repeatOne={repeatOne} isRepeat={isRepeat}/>
         </>
         }
       />

@@ -1,5 +1,5 @@
 import { FaArrowLeft} from 'react-icons/fa'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { NavInfo } from './NavInfo';
 import "animate.css/animate.min.css";
@@ -8,22 +8,27 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 function NavToggled({isToggled, handleToggle}) {
     
     const [icon, setIcon] = useState(NavInfo)
-    // Icons don't update immediatley on click
+
+    useEffect(()=>{
+        setIcon(prevIcons=>prevIcons)
+    },[icon])
+
     function switchPages(id){
-        handleToggle()
-        setIcon(prevIcons => prevIcons.map(iconItem=>{
-            if(iconItem.id===id){
+        setIcon(prevIcons=>prevIcons.map(items=>{
+            // console.log(prevIcons)
+            if(items.id === id){
                 return {
-                    ...iconItem,
+                    ...items,
                     isActive: true
                 }
-            }else {
+            }else{
                 return {
-                    ...iconItem,
+                    ...items,
                     isActive: false
                 }
             }
-        }))
+        }));
+        handleToggle()
     }
 
     return (  
@@ -33,8 +38,8 @@ function NavToggled({isToggled, handleToggle}) {
                 <ul className='mt-[3rem] pl-[2.5rem]'>
                     {icon.map((info)=>{
                         return (
-                            <li key={info.id}>
-                                <Link className='flex items-center text-gray-dark mb-10' to={`${info.link}`} onClick={()=>switchPages(info.id)}>
+                            <li key={info.id} onClick={()=>switchPages(info.id)}>
+                                <Link className='flex items-center text-gray-dark mb-10' to={`${info.link}`}>
                                     <img src={info.isActive === true ? info.active : info.img}/>
                                     <p className='ml-[1.5rem] text-[1.1rem] font-bold'>{info.name}</p>
                                 </Link>
